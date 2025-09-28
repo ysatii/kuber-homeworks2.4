@@ -50,6 +50,7 @@ helm upgrade --install webapp-v2 ./webapp -n app1 \
   --set service.type=NodePort \
   --set service.nodePort=30082
 ```
+![Скриншот 9](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_9.jpg)  
 ---
 
 ## 3. Установить третью копию в app2 (v1, свой NodePort)
@@ -75,6 +76,7 @@ kubectl get all,svc -n app2
 helm list -n app1
 helm list -n app2
 ```
+![Скриншот 10](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_10.jpg)  
 ---
 
 ## 6. Curl изнутри (через multitool → сервис каждого релиза)
@@ -133,6 +135,7 @@ helm get values webapp-v2 -n app1
 ```
 helm list -A | grep webapp
 ```
+![Скриншот 11](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_11.jpg) 
 ---
 
 ## 10. Удаление 
@@ -143,7 +146,7 @@ helm uninstall webapp-v1 -n app2
 kubectl delete ns app1 app2
 ```
 
-![Скриншот 9](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_9.jpg)  
-![Скриншот 10](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_10.jpg)  
-![Скриншот 11](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_11.jpg) 
+
+
+
 ![Скриншот 12](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_12.jpg) 
