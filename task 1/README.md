@@ -285,13 +285,17 @@ helm list -A | grep webapp
 helm get values webapp -n app1
 helm get values webapp -n app2
 
+![Скриншот 7](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_7.jpg)  
 
 
 
+## Проверка содержимого на самом nginx с помощью 
+NGINX1=$(kubectl get pods -n app1 -l app.kubernetes.io/name=webapp-nginx -o jsonpath='{.items[0].metadata.name}')
+kubectl exec -it -n app1 "$NGINX1" -- sh -lc 'cat /usr/share/nginx/html/index.html'
 
-## Проверка, что было установлено :
+NGINX2=$(kubectl get pods -n app2 -l app.kubernetes.io/name=webapp-nginx -o jsonpath='{.items[0].metadata.name}')
+kubectl exec -it -n app2 "$NGINX2" -- sh -lc 'cat /usr/share/nginx/html/index.html'
 
-kubectl describe deploy webapp-webapp-nginx -n app1 | grep Image:
 
 
 Удаляем что было создано 
@@ -301,19 +305,7 @@ kubectl delete namespace app1
 helm uninstall webapp -n app1
 kubectl delete namespace app1
 
-
-
-
-
-
-Проверка содержимого на самом nginx
-NGINX1=$(kubectl get pods -n app1 -l app.kubernetes.io/name=webapp-nginx -o jsonpath='{.items[0].metadata.name}')
-kubectl exec -it -n app1 "$NGINX1" -- sh -lc 'cat /usr/share/nginx/html/index.html'
-
-NGINX2=$(kubectl get pods -n app2 -l app.kubernetes.io/name=webapp-nginx -o jsonpath='{.items[0].metadata.name}')
-kubectl exec -it -n app2 "$NGINX2" -- sh -lc 'cat /usr/share/nginx/html/index.html'
-
-
+![Скриншот 8](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_7.jpg)  
 -----------------------------------------------
 
 
