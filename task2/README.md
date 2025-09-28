@@ -97,3 +97,9 @@ helm uninstall webapp-v1 -n app1
 helm uninstall webapp-v2 -n app1
 helm uninstall webapp-v1 -n app2
 kubectl delete ns app1 app2
+
+
+![Скриншот 9](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_9.jpg)  
+![Скриншот 10](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_10.jpg)  
+![Скриншот 11](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_11.jpg) 
+![Скриншот 12](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_12.jpg) 
