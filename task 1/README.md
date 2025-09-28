@@ -219,9 +219,9 @@ helm lint ./webapp
 
 helm template webapp ./webapp --debug | sed -n '1,300p'
 
-[Скриншот 1](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_1.jpg)
-[Скриншот 2](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_2.jpg)
-[Скриншот 3](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_3.jpg)
+![Скриншот 1](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_1.jpg)
+![Скриншот 2](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_2.jpg)
+![Скриншот 3](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_3.jpg)
 
 
 ---
@@ -261,9 +261,9 @@ minikube ip
 
 
 
-[Скриншот 4](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_4.jpg)
-[Скриншот 5](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_5.jpg)
-[Скриншот 6](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_6.jpg)
+![Скриншот 4](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_4.jpg)
+![Скриншот 5](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_5.jpg)
+![Скриншот 6](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_6.jpg)
 
 
 ## Смотри объекты в неймспейсе app1 и app1:
