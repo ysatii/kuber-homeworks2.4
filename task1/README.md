@@ -5,7 +5,7 @@
 3. В переменных чарта измените образ приложения для изменения версии.
 
 ------
-## Решение 1
+# Решение 1
 
 ## сделаем задание на основе предыдущей работы 
 https://github.com/ysatii/kuber-homeworks2.3/tree/main/task1 
@@ -240,13 +240,13 @@ webapp-0.1.0.tgz с версией! архивовв у нас два!
 ```bash
 minikube start
 ```
-
+---
 ## 13. Создадим неймспейсы:
 ```bash
 kubectl create ns app1
 kubectl create ns app1
 ```
-
+---
 ## 14. Установка:
 
 ```bash
@@ -259,7 +259,8 @@ webapp-2.1.0.tgz nodePort: 30081
 ### 15. проверим адрес ноды minikube ip 
 192.168.49.2:30080  
 192.168.49.2:30081  
- 
+---
+
 ### 16. ссылки на архивы с чартами
 https://github.com/ysatii/kuber-homeworks2.4/blob/main/task1/webapp-0.1.0.tgz   
 https://github.com/ysatii/kuber-homeworks2.4/blob/main/task1/webapp-2.1.0.tgz  
@@ -268,7 +269,7 @@ https://github.com/ysatii/kuber-homeworks2.4/blob/main/task1/webapp-2.1.0.tgz
 ![Скриншот 4](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_4.jpg)  
 ![Скриншот 5](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_5.jpg)  
 ![Скриншот 6](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_6.jpg) 
-
+---
 
 ## 17. Смотри объекты в неймспейсе app1 и app1:
 ```
@@ -282,17 +283,15 @@ kubectl get svc -n app2
 ```
 
 Отдельно список релизов Helm (во всех ns):
-
 helm list -A | grep webapp
-
+---
 
 ## 18. Можно детальнее проверить, какие values подставились:
 helm get values webapp -n app1
 helm get values webapp -n app2
 
 ![Скриншот 7](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_7.jpg)  
-
-
+---
 
 ## 19. Проверка ответа nginx 
 NGINX1=$(kubectl get pods -n app1 -l app.kubernetes.io/name=webapp-nginx -o jsonpath='{.items[0].metadata.name}')
@@ -300,17 +299,16 @@ kubectl exec -it -n app1 "$NGINX1" -- sh -lc 'cat /usr/share/nginx/html/index.ht
 
 NGINX2=$(kubectl get pods -n app2 -l app.kubernetes.io/name=webapp-nginx -o jsonpath='{.items[0].metadata.name}')
 kubectl exec -it -n app2 "$NGINX2" -- sh -lc 'cat /usr/share/nginx/html/index.html'
-
-
+---
 
 ## 20. Удаляем что было создано 
 ```
 helm uninstall webapp -n app1
-kubectl delete namespace app1
-
 helm uninstall webapp -n app1
+
+kubectl delete namespace app1
 kubectl delete namespace app1
 ```
 ![Скриншот 8](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_7.jpg)  
------------------------------------------------
+---
 

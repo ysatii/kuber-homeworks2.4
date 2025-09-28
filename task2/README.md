@@ -1,65 +1,99 @@
 
 
+# Задание 2. Запустить две версии в разных неймспейсах
 
+1. Подготовив чарт, необходимо его проверить. Запуститe несколько копий приложения.
+2. Одну версию в namespace=app1, вторую версию в том же неймспейсе, третью версию в namespace=app2.
+3. Продемонстрируйте результат.
 
-### Две версии образа через разные values
+# Решение 2
 
-`values-v1.yaml`:
-
-```yaml
-nginx:
-  tag: "1.25-alpine"
-```
-
-`values-v2.yaml`:
-
-```yaml
-nginx:
-  tag: "1.26-alpine"
-```
-
-
-
-
-
-Деплой по требованиям ДЗ (несколько копий):
-
-```bash
-# 1) версия v1 в app1
-helm upgrade --install webapp-v1 ./webapp -n app1 -f values-v1.yaml
-
-# 2) версия v2 в app1 (вторая копия в том же ns)
-helm upgrade --install webapp-v2 ./webapp -n app1 -f values-v2.yaml
-
-# 3) версия v1 в app2
-helm upgrade --install webapp-v1 ./webapp -n app2 -f values-v1.yaml
-```
-
-Проверка/скриншоты для README:
-
-```bash
-kubectl get pods -n app1 -o wide
-kubectl get svc -n app1
-kubectl get pods -n app2 -o wide
-kubectl get svc -n app2
-helm list -n app1
-helm list -n app2
-```
-
-Если используешь NodePort:
-
-```bash
-kubectl get svc -n app1
-# далее curl http://<NODE_IP>:<NODE_PORT>
-```
-
+## 1. Старт и неймспейсы
+minikube start
+kubectl create ns app1
+kubectl create ns app2
 ---
 
-## 11) Чек соответствия требованиям ДЗ
-
-* [x] **Упаковано в чарт** для деплоя в разные окружения/неймспейсы.
-* [x] **Каждый компонент — отдельный Deployment**: `nginx` и `multitool` разделены.
-* [x] **Версия образа меняется через values** (`nginx.tag`, `multitool.tag`).
-
+## 2. Установим две копии в app1 (две разные версии, два разных NodePort)
 ```
+cd kuber-homeworks2.4-main/task2
 ```
+
+### app1, релиз v1 → NodePort 30081
+helm upgrade --install webapp-v1 ./webapp -n app1 \
+  -f values-v1.yaml \
+  --set service.type=NodePort \
+  --set service.nodePort=30081
+
+### app1, релиз v2 → NodePort 30082
+helm upgrade --install webapp-v2 ./webapp -n app1 \
+  -f values-v2.yaml \
+  --set service.type=NodePort \
+  --set service.nodePort=30082
+---
+
+## 3. Установить третью копию в app2 (v1, свой NodePort)
+### app2, релиз v1 → NodePort 30083
+helm upgrade --install webapp-v1 ./webapp -n app2 \
+  -f values-v1.yaml \
+  --set service.type=NodePort \
+  --set service.nodePort=30083
+---
+
+## 4. Проверка что установлено
+### Ресурсы и сервисы
+kubectl get all,svc -n app1
+kubectl get all,svc -n app2
+---
+
+### 5. Релизы
+helm list -n app1
+helm list -n app2
+---
+
+## 6. Curl изнутри (через multitool → сервис каждого релиза)
+### app1, релиз v1
+POD1=$(kubectl get pods -n app1 -l app.kubernetes.io/name=webapp-multitool,app.kubernetes.io/instance=webapp-v1 -o jsonpath='{.items[0].metadata.name}')
+kubectl exec -it -n app1 "$POD1" -- curl -s http://webapp-v1-webapp:80
+
+### app1, релиз v2
+POD2=$(kubectl get pods -n app1 -l app.kubernetes.io/name=webapp-multitool,app.kubernetes.io/instance=webapp-v2 -o jsonpath='{.items[0].metadata.name}')
+kubectl exec -it -n app1 "$POD2" -- curl -s http://webapp-v2-webapp:80
+
+### app2, релиз v1
+POD3=$(kubectl get pods -n app2 -l app.kubernetes.io/name=webapp-multitool,app.kubernetes.io/instance=webapp-v1 -o jsonpath='{.items[0].metadata.name}')
+kubectl exec -it -n app2 "$POD3" -- curl -s http://webapp-v1-webapp:80
+---
+
+## 7. Доступ снаружи (через NodePort)
+IP=$(minikube ip)
+
+### app1
+curl "http://$IP:30081"   # webapp-v1 (app1)
+curl "http://$IP:30082"   # webapp-v2 (app1)
+
+### app2
+curl "http://$IP:30083"   # webapp-v1 (app2)
+---
+
+## 8. Информация о релизах и сервисах
+
+### Посмотреть назначенные порты для сервисов:
+kubectl get svc -n app1
+kubectl get svc -n app2
+
+### Посмотреть текущие значения релиза:
+helm get values webapp-v1 -n app1
+helm get values webapp-v1 -n app2
+helm get values webapp-v2 -n app1
+---
+
+## 9. список релизов Helm (во всех ns):
+helm list -A | grep webapp
+---
+
+## 10. Удаление 
+helm uninstall webapp-v1 -n app1
+helm uninstall webapp-v2 -n app1
+helm uninstall webapp-v1 -n app2
+kubectl delete ns app1 app2
