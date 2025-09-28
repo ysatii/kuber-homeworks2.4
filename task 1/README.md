@@ -207,7 +207,8 @@ spec:
 ```bash
 helm template webapp ./webapp > output.yaml
 ```
- 
+
+---
  
 ## 10. проверка линтером
 ```bash
@@ -215,7 +216,9 @@ helm lint ./webapp
 ```
 
 ## 11. рендеренг шаблонов
+
 helm template webapp ./webapp --debug | sed -n '1,300p'
+
 [Скриншот 1](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_1.jpg)
 [Скриншот 2](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_2.jpg)
 [Скриншот 3](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_3.jpg)
@@ -225,8 +228,9 @@ helm template webapp ./webapp --debug | sed -n '1,300p'
 ## 12 Команды для для упаковки чарта в архив
 
 Из каталога, где лежит webapp/:
+```bash
 helm package ./webapp
-
+```
 
 На выходе появится архив:
 webapp-0.1.0.tgz с версией! архивовв у нас два
@@ -255,6 +259,11 @@ minikube ip
 192.168.49.2:30080
 192.168.49.2:30081
 
+
+
+[Скриншот 4](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_4.jpg)
+[Скриншот 5](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_5.jpg)
+[Скриншот 6](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_6.jpg)
 
 
 ## Смотри объекты в неймспейсе app1 и app1:
