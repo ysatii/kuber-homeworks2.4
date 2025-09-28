@@ -50,7 +50,7 @@ helm upgrade --install webapp-v2 ./webapp -n app1 \
   --set service.type=NodePort \
   --set service.nodePort=30082
 ```
-![Скриншот 9](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_9.jpg)  
+ 
 ---
 
 ## 3. Установить третью копию в app2 (v1, свой NodePort)
@@ -61,6 +61,7 @@ helm upgrade --install webapp-v1 ./webapp -n app2 \
   --set service.type=NodePort \
   --set service.nodePort=30083
 ```
+![Скриншот 9](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_9.jpg) 
 ---
 
 ## 4. Проверка что установлено
