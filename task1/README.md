@@ -261,8 +261,8 @@ webapp-2.1.0.tgz nodePort: 30081
 192.168.49.2:30081  
  
 ### 16. ссылки на архивы с чартами
-https://github.com/ysatii/kuber-homeworks2.4/blob/main/task%201/webapp-0.1.0.tgz   
-https://github.com/ysatii/kuber-homeworks2.4/blob/main/task%201/webapp-2.1.0.tgz  
+https://github.com/ysatii/kuber-homeworks2.4/blob/main/task1/webapp-0.1.0.tgz   
+https://github.com/ysatii/kuber-homeworks2.4/blob/main/task1/webapp-2.1.0.tgz  
 
 
 ![Скриншот 4](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_4.jpg)  

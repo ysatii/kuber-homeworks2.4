@@ -29,7 +29,7 @@
 
 ### Ответ 1
 
-https://github.com/ysatii/kuber-homeworks2.4/tree/main/task%201
+https://github.com/ysatii/kuber-homeworks2.4/tree/main/task1
 
 ------
 ### Задание 2. Запустить две версии в разных неймспейсах
@@ -40,7 +40,7 @@ https://github.com/ysatii/kuber-homeworks2.4/tree/main/task%201
 
 ### Ответ 2
 
-https://github.com/ysatii/kuber-homeworks2.4/tree/main/task%202
+https://github.com/ysatii/kuber-homeworks2.4/tree/main/task2
 
 ------
 
