@@ -216,8 +216,9 @@ helm lint ./webapp
 ```
 
 ## 11. рендеренг шаблонов
-
+```
 helm template webapp ./webapp --debug | sed -n '1,300p'
+```
 
 ![Скриншот 1](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_1.jpg)
 ![Скриншот 2](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_2.jpg)
@@ -225,7 +226,7 @@ helm template webapp ./webapp --debug | sed -n '1,300p'
 
 
 ---
-## 12 Команды для для упаковки чарта в архив
+## 12. Команды для для упаковки чарта в архив
 
 Из каталога, где лежит webapp/:
 ```bash
@@ -233,20 +234,20 @@ helm package ./webapp
 ```
 
 На выходе появится архив:
-webapp-0.1.0.tgz с версией! архивовв у нас два
-webapp-2.1.0.tgz 
+webapp-0.1.0.tgz с версией! архивовв у нас два!
+второй webapp-2.1.0.tgz 
 
 ```bash
 minikube start
 ```
 
-## Создадим неймспейсы:
+## 13. Создадим неймспейсы:
 ```bash
 kubectl create ns app1
 kubectl create ns app1
 ```
 
-## Установка:
+## 14. Установка:
 
 ```bash
 helm install webapp ./webapp-0.1.0.tgz -n app1  
@@ -255,11 +256,11 @@ helm install webapp ./webapp-2.1.0.tgz -n app2
 webapp-0.1.0.tgz nodePort: 30080  
 webapp-2.1.0.tgz nodePort: 30081  
   
-### проверим адрес ноды minikube ip 
+### 15. проверим адрес ноды minikube ip 
 192.168.49.2:30080  
 192.168.49.2:30081  
  
-### ссылки на архивы с чартами
+### 16. ссылки на архивы с чартами
 https://github.com/ysatii/kuber-homeworks2.4/blob/main/task%201/webapp-0.1.0.tgz   
 https://github.com/ysatii/kuber-homeworks2.4/blob/main/task%201/webapp-2.1.0.tgz  
 
@@ -269,7 +270,7 @@ https://github.com/ysatii/kuber-homeworks2.4/blob/main/task%201/webapp-2.1.0.tgz
 ![Скриншот 6](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_6.jpg) 
 
 
-## Смотри объекты в неймспейсе app1 и app1:
+## 17. Смотри объекты в неймспейсе app1 и app1:
 ```
 kubectl get all -n app1
 kubectl get all -n app2
@@ -285,7 +286,7 @@ kubectl get svc -n app2
 helm list -A | grep webapp
 
 
-## Можно детальнее проверить, какие values подставились:
+## 18. Можно детальнее проверить, какие values подставились:
 helm get values webapp -n app1
 helm get values webapp -n app2
 
@@ -293,7 +294,7 @@ helm get values webapp -n app2
 
 
 
-## Проверка ответа nginx 
+## 19. Проверка ответа nginx 
 NGINX1=$(kubectl get pods -n app1 -l app.kubernetes.io/name=webapp-nginx -o jsonpath='{.items[0].metadata.name}')
 kubectl exec -it -n app1 "$NGINX1" -- sh -lc 'cat /usr/share/nginx/html/index.html'
 
@@ -302,7 +303,7 @@ kubectl exec -it -n app2 "$NGINX2" -- sh -lc 'cat /usr/share/nginx/html/index.ht
 
 
 
-## Удаляем что было создано 
+## 20. Удаляем что было создано 
 ```
 helm uninstall webapp -n app1
 kubectl delete namespace app1
