@@ -27,7 +27,7 @@
 2. Каждый компонент приложения деплоится отдельным deployment’ом или statefulset’ом.
 3. В переменных чарта измените образ приложения для изменения версии.
 
-### Ответ1
+### Ответ 1
 
 https://github.com/ysatii/kuber-homeworks2.4/tree/main/task%201
 
@@ -38,7 +38,7 @@ https://github.com/ysatii/kuber-homeworks2.4/tree/main/task%201
 2. Одну версию в namespace=app1, вторую версию в том же неймспейсе, третью версию в namespace=app2.
 3. Продемонстрируйте результат.
 
-### Ответ1
+### Ответ 2
 
 https://github.com/ysatii/kuber-homeworks2.4/tree/main/task%202
 
