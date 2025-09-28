@@ -7,7 +7,8 @@
 ------
 ## Решение 1
 
-## сделаем задание на основе предыдущей работы  https://github.com/ysatii/kuber-homeworks2.3/tree/main/task1 
+## сделаем задание на основе предыдущей работы 
+https://github.com/ysatii/kuber-homeworks2.3/tree/main/task1 
 ---
 
 ## 1. Структура чарта
@@ -215,6 +216,10 @@ helm lint ./webapp
 
 ## 11. рендеренг шаблонов
 helm template webapp ./webapp --debug | sed -n '1,300p'
+[Скриншот 1](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_1.jpg)
+[Скриншот 2](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_2.jpg)
+[Скриншот 3](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_3.jpg)
+
 
 ---
 ## 12 Команды для для упаковки чарта в архив
