@@ -11,7 +11,7 @@ data:
   index.html: |
     <html>
       <body>
-        <h1>Hello from nginx on Kubernetes!</h1>
+        <h1>Hello from nginx on Kubernetes! namespace 1</h1>
       </body>
     </html>
 ---
@@ -24,7 +24,7 @@ metadata:
     app.kubernetes.io/name: webapp
     app.kubernetes.io/instance: webapp
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     # Сервис привязываем к nginx-подам
     app.kubernetes.io/name: webapp-nginx
@@ -32,6 +32,7 @@ spec:
   ports:
     - port: 80
       targetPort: 80
+      nodePort: 30080
 ---
 # Source: webapp/templates/deployment-multitool.yaml
 apiVersion: apps/v1
@@ -84,7 +85,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: nginx:1.25-alpine
+          image: nginx:1.26-alpine
           ports:
             - containerPort: 80
           volumeMounts:
