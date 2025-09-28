@@ -249,21 +249,24 @@ kubectl create ns app1
 ## Установка:
 
 ```bash
-helm install webapp ./webapp-0.1.0.tgz -n app1
-helm install webapp ./webapp-2.1.0.tgz -n app2
+helm install webapp ./webapp-0.1.0.tgz -n app1  
+helm install webapp ./webapp-2.1.0.tgz -n app2  
 ```
-webapp-0.1.0.tgz nodePort: 30080
-webapp-2.1.0.tgz nodePort: 30081
+webapp-0.1.0.tgz nodePort: 30080  
+webapp-2.1.0.tgz nodePort: 30081  
+  
+### проверим адрес ноды minikube ip 
+192.168.49.2:30080  
+192.168.49.2:30081  
+ 
+### ссылки на архивы с чартами
+https://github.com/ysatii/kuber-homeworks2.4/blob/main/task%201/webapp-0.1.0.tgz   
+https://github.com/ysatii/kuber-homeworks2.4/blob/main/task%201/webapp-2.1.0.tgz  
 
-minikube ip
-192.168.49.2:30080
-192.168.49.2:30081
 
-
-
-![Скриншот 4](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_4.jpg)
-![Скриншот 5](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_5.jpg)
-![Скриншот 6](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_6.jpg)
+![Скриншот 4](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_4.jpg)  
+![Скриншот 5](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_5.jpg)  
+![Скриншот 6](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_6.jpg) 
 
 
 ## Смотри объекты в неймспейсе app1 и app1:
