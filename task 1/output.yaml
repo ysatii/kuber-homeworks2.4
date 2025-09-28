@@ -1,0 +1,96 @@
+---
+# Source: webapp/templates/configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: webapp-webapp-content
+  labels:
+    app.kubernetes.io/name: webapp
+    app.kubernetes.io/instance: webapp
+data:
+  index.html: |
+    <html>
+      <body>
+        <h1>Hello from nginx on Kubernetes!</h1>
+      </body>
+    </html>
+---
+# Source: webapp/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-webapp
+  labels:
+    app.kubernetes.io/name: webapp
+    app.kubernetes.io/instance: webapp
+spec:
+  type: ClusterIP
+  selector:
+    # Сервис привязываем к nginx-подам
+    app.kubernetes.io/name: webapp-nginx
+    app.kubernetes.io/instance: webapp
+  ports:
+    - port: 80
+      targetPort: 80
+---
+# Source: webapp/templates/deployment-multitool.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-webapp-multitool
+  labels:
+    app.kubernetes.io/name: webapp
+    app.kubernetes.io/instance: webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: webapp-multitool
+      app.kubernetes.io/instance: webapp
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: webapp-multitool
+        app.kubernetes.io/instance: webapp
+    spec:
+      containers:
+        - name: multitool
+          image: wbitt/network-multitool:latest
+          env:
+            - name: HTTP_PORT
+              value: "1180"
+          ports:
+            - containerPort: 1180
+---
+# Source: webapp/templates/deployment-nginx.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-webapp-nginx
+  labels:
+    app.kubernetes.io/name: webapp
+    app.kubernetes.io/instance: webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: webapp-nginx
+      app.kubernetes.io/instance: webapp
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: webapp-nginx
+        app.kubernetes.io/instance: webapp
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.25-alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: web-content
+              mountPath: /usr/share/nginx/html
+      volumes:
+        - name: web-content
+          configMap:
+            name: webapp-webapp-content

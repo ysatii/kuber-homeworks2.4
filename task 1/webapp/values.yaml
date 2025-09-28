@@ -1,0 +1,26 @@
+replicaCount:
+  nginx: 1
+  multitool: 1
+
+nginx:
+  image: nginx
+  tag: "1.25-alpine"
+  containerPort: 80
+
+multitool:
+  image: wbitt/network-multitool
+  tag: "latest"
+  httpPort: 1180
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 80
+  nodePort: 30080
+
+webPage: |
+  <html>
+    <body>
+      <h1>Hello from nginx on Kubernetes!</h1>
+    </body>
+  </html>
