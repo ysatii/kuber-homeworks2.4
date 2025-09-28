@@ -290,8 +290,10 @@ helm list -A | grep webapp
 ---
 
 ## 18. Можно детальнее проверить, какие values подставились:
+```
 helm get values webapp -n app1
 helm get values webapp -n app2
+```
 
 ![Скриншот 7](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_7.jpg)  
 ---
