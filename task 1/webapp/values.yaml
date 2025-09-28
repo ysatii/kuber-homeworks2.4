@@ -4,7 +4,7 @@ replicaCount:
 
 nginx:
   image: nginx
-  tag: "1.25-alpine"
+  tag: "1.26-alpine"
   containerPort: 80
 
 multitool:
@@ -13,7 +13,7 @@ multitool:
   httpPort: 1180
 
 service:
-  type: ClusterIP
+  type: NodePort
   port: 80
   targetPort: 80
   nodePort: 30080
@@ -21,6 +21,6 @@ service:
 webPage: |
   <html>
     <body>
-      <h1>Hello from nginx on Kubernetes!</h1>
+      <h1>Hello from nginx on Kubernetes! namespace 1</h1>
     </body>
   </html>

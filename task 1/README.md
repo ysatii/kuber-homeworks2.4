@@ -46,7 +46,7 @@ type: application
 
 ---
 
-## 3 Файл `values.yaml`
+## 3. Файл `values.yaml`
 
 ```yaml
 replicaCount:
@@ -60,7 +60,7 @@ nginx:
 
 multitool:
   image: wbitt/network-multitool
-  tag: "alpine-3.20"
+  tag: "latest"
   httpPort: 1180
 
 service:
@@ -213,41 +213,60 @@ spec:
 ```bash
 helm template webapp ./webapp > output.yaml
 ```
-Установим  helm 
-```sh
-sudo snap install helm --classic
-helm version
-```
-
-повторим 
-
+ 
+ 
+## 10. проверка линтером
 ```bash
-helm template webapp ./webapp > output.yaml
+helm lint ./webapp
 ```
+
+## 11. рендеренг шаблонов
+helm template webapp ./webapp --debug | sed -n '1,300p
 
 ---
+## 12 Команды для для упаковки чарта в архив
 
-## 10 Команды для установки  
+Из каталога, где лежит webapp/:
+helm package ./webapp
 
-Создай неймспейсы:
+
+На выходе появится архив:
+webapp-0.1.0.tgz с версией! архивовв у нас два
+webapp-2.1.0.tgz 
+
 ```bash
 minikube start
 ```
 
+## Создадим неймспейсы:
 ```bash
+kubectl create ns app1
 kubectl create ns app1
 ```
 
-Базовая установка:
+## Установка:
 
 ```bash
-helm upgrade --install webapp ./webapp -n app1
+helm install webapp ./webapp-0.1.0.tgz -n app1
+helm install webapp ./webapp-2.1.0.tgz -n app2
 ```
+webapp-0.1.0.tgz nodePort: 30080
+webapp-2.1.0.tgz nodePort: 30081
 
-Смотри объекты в неймспейсе app1:
+minikube ip
+192.168.49.2:30080
+192.168.49.2:30081
+
+
+
+## Смотри объекты в неймспейсе app1 и app1:
 
 kubectl get all -n app1
+kubectl get all -n app2
 
+Посмотреть сервисы в namespace app1 и app2
+kubectl get svc -n app1
+kubectl get svc -n app2
 
 Отдельно список релизов Helm (во всех ns):
 
@@ -257,6 +276,53 @@ helm list -A | grep webapp
 Можно детальнее проверить, какие values подставились:
 
 helm get values webapp -n app1
+helm get values webapp -n app2
+
+
+
+
+
+## Проверка, что было установлено :
+
+kubectl describe deploy webapp-webapp-nginx -n app1 | grep Image:
+
+
+Удаляем что было создано 
+helm uninstall webapp -n app1
+kubectl delete namespace app1
+
+helm uninstall webapp -n app1
+kubectl delete namespace app1
+
+
+
+
+
+
+Проверка содержимого на самом nginx
+NGINX1=$(kubectl get pods -n app1 -l app.kubernetes.io/name=webapp-nginx -o jsonpath='{.items[0].metadata.name}')
+kubectl exec -it -n app1 "$NGINX1" -- sh -lc 'cat /usr/share/nginx/html/index.html'
+
+NGINX2=$(kubectl get pods -n app2 -l app.kubernetes.io/name=webapp-nginx -o jsonpath='{.items[0].metadata.name}')
+kubectl exec -it -n app2 "$NGINX2" -- sh -lc 'cat /usr/share/nginx/html/index.html'
+
+
+-----------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 2. Изменение образа через values (требование ДЗ)
@@ -271,36 +337,6 @@ nginx:
 Меняешь версию образа (например, на "1.26-alpine") и обновляешь релиз:
 
 helm upgrade webapp ./webapp -n app1
-
-
-Проверка, что новая версия применена:
-
-kubectl describe deploy webapp-webapp-nginx -n app1 | grep Image:
-
-
-Удаляем что было создано 
-helm uninstall webapp -n app1
-kubectl delete namespace app1
-
-
-
-ак упаковать чарт в архив
-
-Из каталога, где лежит твой webapp/:
-
-helm package ./webapp
-
-
-На выходе появится архив:
-
-webapp-0.1.0.tgz
-
-
-
-
-
-
-
 
 
 
