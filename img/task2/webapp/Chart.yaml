@@ -1,0 +1,6 @@
+apiVersion: v2
+name: webapp
+version: 0.1.0
+appVersion: "1.0.0"
+description: "Helm chart for nginx + multitool split into separate Deployments"
+type: application

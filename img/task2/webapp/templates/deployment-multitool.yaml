@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "webapp.fullname" . }}-multitool
+  labels:
+    app.kubernetes.io/name: {{ include "webapp.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount.multitool }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "webapp.name" . }}-multitool
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "webapp.name" . }}-multitool
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: multitool
+          image: {{ .Values.multitool.image }}:{{ .Values.multitool.tag }}
+          env:
+            - name: HTTP_PORT
+              value: "{{ .Values.multitool.httpPort }}"
+          ports:
+            - containerPort: {{ .Values.multitool.httpPort }}

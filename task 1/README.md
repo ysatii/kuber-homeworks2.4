@@ -267,21 +267,22 @@ minikube ip
 
 
 ## Смотри объекты в неймспейсе app1 и app1:
-
+```
 kubectl get all -n app1
 kubectl get all -n app2
-
+```
 Посмотреть сервисы в namespace app1 и app2
+```
 kubectl get svc -n app1
 kubectl get svc -n app2
+```
 
 Отдельно список релизов Helm (во всех ns):
 
 helm list -A | grep webapp
 
 
-Можно детальнее проверить, какие values подставились:
-
+## Можно детальнее проверить, какие values подставились:
 helm get values webapp -n app1
 helm get values webapp -n app2
 
@@ -289,7 +290,7 @@ helm get values webapp -n app2
 
 
 
-## Проверка содержимого на самом nginx с помощью 
+## Проверка ответа nginx 
 NGINX1=$(kubectl get pods -n app1 -l app.kubernetes.io/name=webapp-nginx -o jsonpath='{.items[0].metadata.name}')
 kubectl exec -it -n app1 "$NGINX1" -- sh -lc 'cat /usr/share/nginx/html/index.html'
 
@@ -298,108 +299,14 @@ kubectl exec -it -n app2 "$NGINX2" -- sh -lc 'cat /usr/share/nginx/html/index.ht
 
 
 
-Удаляем что было создано 
+## Удаляем что было создано 
+```
 helm uninstall webapp -n app1
 kubectl delete namespace app1
 
 helm uninstall webapp -n app1
 kubectl delete namespace app1
-
+```
 ![Скриншот 8](https://github.com/ysatii/kuber-homeworks2.4/blob/main/img/img_7.jpg)  
 -----------------------------------------------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-2. Изменение образа через values (требование ДЗ)
-
-В values.yaml у тебя есть секция:
-
-nginx:
-  image: nginx
-  tag: "1.25-alpine"
-
-
-Меняешь версию образа (например, на "1.26-alpine") и обновляешь релиз:
-
-helm upgrade webapp ./webapp -n app1
-
-
-
-
-
-
-### Две версии образа через разные values
-
-`values-v1.yaml`:
-
-```yaml
-nginx:
-  tag: "1.25-alpine"
-```
-
-`values-v2.yaml`:
-
-```yaml
-nginx:
-  tag: "1.26-alpine"
-```
-
-
-
-
-
-Деплой по требованиям ДЗ (несколько копий):
-
-```bash
-# 1) версия v1 в app1
-helm upgrade --install webapp-v1 ./webapp -n app1 -f values-v1.yaml
-
-# 2) версия v2 в app1 (вторая копия в том же ns)
-helm upgrade --install webapp-v2 ./webapp -n app1 -f values-v2.yaml
-
-# 3) версия v1 в app2
-helm upgrade --install webapp-v1 ./webapp -n app2 -f values-v1.yaml
-```
-
-Проверка/скриншоты для README:
-
-```bash
-kubectl get pods -n app1 -o wide
-kubectl get svc -n app1
-kubectl get pods -n app2 -o wide
-kubectl get svc -n app2
-helm list -n app1
-helm list -n app2
-```
-
-Если используешь NodePort:
-
-```bash
-kubectl get svc -n app1
-# далее curl http://<NODE_IP>:<NODE_PORT>
-```
-
----
-
-## 11) Чек соответствия требованиям ДЗ
-
-* [x] **Упаковано в чарт** для деплоя в разные окружения/неймспейсы.
-* [x] **Каждый компонент — отдельный Deployment**: `nginx` и `multitool` разделены.
-* [x] **Версия образа меняется через values** (`nginx.tag`, `multitool.tag`).
-
-```
-```
